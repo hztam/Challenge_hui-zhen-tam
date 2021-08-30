@@ -23,24 +23,58 @@ colnames(complete)[3] <- "bill"
 write.csv(complete, file = "complete.csv")
 
 #############################################################
-#distribution of variables
 install.packages("tidyverse")
 library(ggplot2)
+require(ggplot2)
+require(scales)
+install.packages("gmodels")
+library(gmodels)
 
 data=read.table("complete.csv",sep=",",header=T)
 data$resident_status=factor(data$resident_status)
 data$race=factor(data$race)
 data$gender=factor(data$gender)
 
-a<-ggplot(data=data,aes(x=resident_status,y=bill))
-a+ geom_point()+ggtitle("Plot of total bill by resident status") +
-  xlab("Resident status") + ylab("Total bill amount")
+#distribution of variables
+mean(data$bill)
+summary(data$bill)
+quantile(data$bill)
+CrossTable(data$gender)
 
-ggplot
+CrossTable(data$race)
+ggplot(data=data,aes(y=race))+geom_bar(color="black")+coord_flip()+
+  ggtitle("Number of patient by race") +
+  xlab("Count") + ylab("Race")
+
+summary(data$Age)
+ggplot(data=data,aes(y=Age))+geom_histogram(binwidth=1, color="black")+coord_flip()+
+  ggtitle("Histogram of patient age") +
+  xlab("Density") + ylab("Age (years)")
+
+summary(data$weight)
+ggplot(data=data,aes(y=weight))+geom_histogram(binwidth=1, color="black")+coord_flip()+
+  ggtitle("Distribution of patient weight") +
+  xlab("Density") + ylab("Weight (kg)")
+
+summary(data$height)
+ggplot(data=data,aes(y=height))+geom_histogram(binwidth=1, color="black")+coord_flip()+
+  ggtitle("Distribution of patient height") +
+  xlab("Density") + ylab("height (cm)")
+
+summary(data$bill)
+ggplot(data=data,aes(y=bill))+geom_histogram(binwidth=700, color="black")+coord_flip()+
+  ggtitle("Distribution of bill amount") +
+  xlab("Density") + ylab("Bill amount")
+ggplot(data=data,aes(y=log(bill)))+geom_histogram(binwidth=0.05, color="black")+coord_flip()+
+  ggtitle("Distribution of bill amount") +
+  xlab("Density") + ylab("Bill amount")
+
+a<-ggplot(data=data,aes(x=resident_status,y=bill))
+a+geom_boxplot()+scale_y_continuous(labels=dollar)+
+  ggtitle("Boxplot of total bill by resident status") +
+  xlab("Resident status") + ylab("Total bill amount")
 
 plot(bill~gender,data=data)
 plot(bill~resident_status,data=data)
 
-mean(bill)
-summary(bill)
-quantile(bill)
+
