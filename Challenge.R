@@ -74,7 +74,64 @@ a+geom_boxplot()+scale_y_continuous(labels=dollar)+
   ggtitle("Boxplot of total bill by resident status") +
   xlab("Resident status") + ylab("Total bill amount")
 
-plot(bill~gender,data=data)
-plot(bill~resident_status,data=data)
+b<-ggplot(data=data,aes(x=gender,y=bill))
+b+geom_boxplot()+scale_y_continuous(labels=dollar)+
+  ggtitle("Boxplot of total bill by gender") +
+  xlab("Gender") + ylab("Total bill amount")
 
+c<-ggplot(data=data,aes(x=race,y=bill))
+c+geom_boxplot()+scale_y_continuous(labels=dollar)+
+  ggtitle("Boxplot of total bill by race") +
+  xlab("Race") + ylab("Total bill amount")
+
+d<-ggplot(data=data,aes(x=Age,y=bill))
+d+geom_jitter()+scale_y_continuous(labels=dollar)+
+  ggtitle("Scatter plot of total bill against age") +
+  xlab("Age (years)") + ylab("Total bill amount")
+
+e<-ggplot(data=data,aes(x=weight,y=bill))
+e+geom_jitter()+scale_y_continuous(labels=dollar)+
+  ggtitle("Scatter plot of total bill against weight") +
+  xlab("Weight (kg)") + ylab("Total bill amount")
+
+#linear regression model
+lm1<-lm(log(bill)~gender, data=data)
+summary(lm1)
+exp(coef(lm1)[2])
+
+lm2<-lm(log(bill)~race, data=data)
+summary(lm2)
+exp(coef(lm2)[2])
+exp(coef(lm2)[3])
+exp(coef(lm2)[4])
+
+data<-within(data, resident_status<-relevel(resident_status, ref = 3))
+lm3<-lm(log(bill)~resident_status, data=data)
+summary(lm3)
+exp(coef(lm3)[2])
+exp(coef(lm3)[3])
+
+lm4<-lm(log(bill)~Age, data=data)
+summary(lm4)
+exp(coef(lm4)[2])
+
+lm5<-lm(log(bill)~lab_result_3, data=data)
+summary(lm5)
+exp(coef(lm5)[2])
+
+lm6<-lm(log(bill)~symptom_5, data=data)
+summary(lm6)
+exp(coef(lm6)[2])
+
+lm7<-lm(log(bill)~preop_medication_6, data=data)
+summary(lm7)
+exp(coef(lm7)[2])
+
+lm8<-lm(log(bill)~medical_history_7, data=data)
+summary(lm8)
+exp(coef(lm8)[2])
+
+lm9<-lm(log(bill)~weight, data=data)
+summary(lm9)
+exp(coef(lm9)[2])
 
