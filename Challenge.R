@@ -41,6 +41,11 @@ summary(data$bill)
 quantile(data$bill)
 CrossTable(data$gender)
 
+CrossTable(data$resident_status)
+ggplot(data=data,aes(y=resident_status))+geom_bar(color="black")+coord_flip()+
+  ggtitle("Number of patient by resident status") +
+  xlab("Count") + ylab("Resident status")
+
 CrossTable(data$race)
 ggplot(data=data,aes(y=race))+geom_bar(color="black")+coord_flip()+
   ggtitle("Number of patient by race") +
