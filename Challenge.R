@@ -72,7 +72,7 @@ ggplot(data=data,aes(y=bill))+geom_histogram(binwidth=700, color="black")+coord_
   xlab("Density") + ylab("Bill amount")
 ggplot(data=data,aes(y=log(bill)))+geom_histogram(binwidth=0.05, color="black")+coord_flip()+
   ggtitle("Distribution of bill amount") +
-  xlab("Density") + ylab("Bill amount")
+  xlab("Density") + ylab("Bill amount (log transformed)")
 
 a<-ggplot(data=data,aes(x=resident_status,y=bill))
 a+geom_boxplot()+scale_y_continuous(labels=dollar)+
